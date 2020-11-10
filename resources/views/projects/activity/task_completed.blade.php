@@ -1,0 +1,1 @@
+{{ $activity->user->name }} have completed {{ $activity->subject->body }} task
