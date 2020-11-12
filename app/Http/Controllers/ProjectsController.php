@@ -15,7 +15,7 @@ class ProjectsController extends Controller
 
     public function index()
     {
-    	$projects = auth()->user()->projects;
+    	$projects = auth()->user()->accessibleProjects();
 
 		return view('projects.index', compact('projects'));
     }
@@ -61,7 +61,7 @@ class ProjectsController extends Controller
 
     public function destroy(Project $project)
     {
-        $this->authorize('update', $project);
+        $this->authorize('manage', $project);
         
         $project->delete();
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ProjectTasksController;
+use App\Http\Controllers\ProjectInvitationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,8 @@ Route::get('/projects/{project}/edit', [ProjectsController::class, 'edit'])->nam
 Route::get('/projects', [ProjectsController::class, 'index'])->name('projects');
 Route::get('/projects/{project}', [ProjectsController::class, 'show'])->name('projects.show');
 Route::patch('/projects/{project}', [ProjectsController::class, 'update'])->name('projects.update');
+
+Route::post('projects/{project}/invitations', [ProjectInvitationsController::class, 'store'])->name('invitations.store');
 
 Route::post('/projects/{project}/tasks', [ProjectTasksController::class, 'store'])->name('tasks.store');
 Route::patch('/projects/{project}/tasks/{task}', [ProjectTasksController::class, 'update'])->name('tasks.update');

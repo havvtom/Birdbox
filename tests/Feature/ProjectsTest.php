@@ -164,4 +164,15 @@ class ProjectsTest extends TestCase
     {
         $this->get('projects')->assertRedirect('login');
     }
+
+    public function test_a_user_can_see_all_projects_they_have_been_invited_to_on_their_dashboard()
+    {
+        $this->signIn();
+
+        $project = Project::factory()->create();
+
+        $project->invite(auth()->user());
+
+        $this->get('projects')->assertSee($project->title);
+    }
 }

@@ -8,12 +8,20 @@
 			>
 				<a href="/projects">My Projects</a>/{{ $project->title }}
 			</p>
-			<a 
-				href="{{ route('projects.edit', $project) }}"
-				class="button"
-			>
-				Edit Project
-			</a>
+			<div class="flex items-center">
+				@foreach($project->members as $member)
+					<img src="https://gravatar.com/avatar/{{ md5($member->email) }}?s=60" alt="{{ $member->name }}'s avatar" class="w-8 rounded-full mr-2">
+				@endforeach
+
+				<img src="https://gravatar.com/avatar/{{ md5($project->owner->email) }}?s=60" alt="{{ $project->owner->name }}'s avatar" class="w-8 rounded-full mr-2">
+
+				<a 
+					href="{{ route('projects.edit', $project) }}"
+					class="button ml-6"
+				>
+					Edit Project
+				</a>
+			</div>
 		</div>
 	</header>
 	<main>
@@ -61,6 +69,10 @@
 				@include('projects.card')
 
 				@include('projects.activity')
+
+				@can('manage', $project)
+					@include('projects.invites')
+				@endcan
 			</div>			
 		</div>
 	</main>

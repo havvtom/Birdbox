@@ -24,4 +24,23 @@ class UserTest extends TestCase
 
     	$this->assertEquals(1, $user->projects->count());
     }
+
+    public function test_a_user_has_accessible_projects()
+    {
+        $john = User::factory()->create(['name' => 'John']);
+
+        $project = Project::factory()->create(['owner_id'=>$john->id]);
+
+        $this->assertCount(1, $john->accessibleProjects());
+
+        $project2 = Project::factory()->create(['owner_id' => $sally = User::factory()->create()]);
+
+        $project2->invite($john);
+
+        $nick = User::factory()->create();
+
+        $project2->invite($nick);
+
+        $this->assertCount(2, $john->fresh()->accessibleProjects());
+    }
 }
